@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 映射器接口的全路径 -->
+<mapper namespace="cn.sumeirui.base.IBaseMapper">
+	
+	<insert id="save" parameterType="map">
+		INSERT INTO ${tableName}
+		<foreach collection="SQLColumns" index="index" item="item"  open="(" separator="," close=")">
+			${item.columnKey}
+		</foreach>
+		VALUES
+		<foreach collection="SQLColumns" item="item" open="(" separator="," close=")">
+			#{item.columnValue}
+		</foreach>
+	</insert>
+
+	<select id="queryById" parameterType="map" resultType="hashmap">
+		SELECT * FROM ${tableName} WHERE ${id.columnKey} = #{id.columnValue}
+	</select>
+
+	<delete id="del" parameterType="map">
+		DELETE FROM ${tableName} WHERE id = ${id}
+	</delete>
+
+	<select id="queryByPage" parameterType="map" resultType="hashmap">
+		SELECT * FROM ${tableName} LIMIT ${start} , ${rowsize}
+	</select>
+
+	<!--<select id="queryByCondition" parameterType="map" resultType="hashmap">-->
+		<!--SELECT * FROM ${tableName}-->
+			<!--<if test="null != groupby">-->
+				<!--GROUP BY ${groupby}-->
+			<!--</if>-->
+			<!--<if test="null != orderby">-->
+				<!--ORDER BY ${orderby}-->
+			<!--</if>-->
+			<!--<if test="null != start && null != rowsize">-->
+				<!--LIMIT ${start} , ${rowsize}-->
+			<!--</if>-->
+	<!--</select>-->
+
+	<update id="update" parameterType="hashmap">
+		UPDATE ${tableName}
+		<set>
+			<foreach collection="SQLColumns" item="item" separator=",">
+				${item.columnKey} = #{item.columnValue}
+			</foreach>
+		</set>
+
+		WHERE ${id.columnKey} = #{id.columnValue}
+
+	</update>
+</mapper>
