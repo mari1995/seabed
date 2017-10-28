@@ -1,5 +1,6 @@
 # seabed
-1）基于 mybatis 封装的dao层和service层   
+## 1）实现
+基于 mybatis 封装的dao层和service层   
 实现对单表的查询。  
 并配合注解对实体类中的对象，实现字段和实体类属性的映射。
 
